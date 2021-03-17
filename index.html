@@ -278,7 +278,7 @@
             event.preventDefault();
             var form_data = $(this).serialize();
                 $.ajax({
-                    url:"add_comment.php",
+                    url:"https://harianis.000webhostapp.com/add_comment.php",
                     method:"POST",
                     data:form_data,
                     dataType:"JSON",
@@ -297,7 +297,7 @@
 
         function load_comment(){
             $.ajax({
-                url:"get_comment.php",
+                url:"https://harianis.000webhostapp.com/get_comment.php",
                 method:"POST",
                 success:function(data){
                     $('#display_comment').html(data);
