@@ -1,0 +1,316 @@
+<?php
+// Mengirimkan Token Keamanan Ajax Request (Csrf Token)
+// session_start();
+// if (empty($_SESSION['csrf_token'])) {
+//   $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+// }
+// ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Csrf Token -->
+    <!-- <meta name="csrf-token" content="<?= $_SESSION['csrf_token'] ?>"> -->
+    <meta property="og:site_name" content="Pernikahan Hari & Anis">
+    <meta property="og:title" content="Pernikahan Hari & Anis" />
+    <meta property="og:description" content="Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang. Sungguh, pada yang demikian itu benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berpikir." />
+    <meta property="og:image" itemprop="image" content="assets/sunflower_icon.png">
+    <meta property="og:type" content="website" />
+
+    <title>Hari & Anis</title>
+    <link rel="shortcut icon" href="assets/sunflower_icon.png" type="image/png" sizes="16x16">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/contentStyle.css">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster+Two&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+
+</head>
+<body>
+    <audio id="music" hidden loop>
+        <source src="assets/bg_sound.mp3" type="audio/mp3">
+    </audio>
+    <a type="button" onclick="onoff()" id="mute-btn" class="btn-mute">
+        <i id="mute-icon" class="fas fa-volume-up my-float"></i>
+    </a>
+    <!-- Welcome Modal -->
+    <div class="modal fade" id="welcomeModal">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header justify-content-center">
+                    <div class="topOrnamen"><img src="assets/topOrnamen.png" alt="" width="25%"></div>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="assets/cover.png" class="modal-img mx-auto d-block" alt="..." height="150">
+                    <div class="modalText">
+                        <!-- <p class="modalText-first">The Wedding of</p> -->
+                        <p class="modalText-second">Hari & Anis Wedding</p>
+                    </div>
+                    <p></p>
+                    <button onclick="playAudio()" type="button" class="btn btn-buka mb-3" data-dismiss="modal">Buka</button>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <div class="bottomOrnamen"><img src="assets/bottomOrnamen.png" alt="" width="25%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Full Image Background -->
+    <div style="background: url(assets/bgCover.png)" class="bg-cover">
+    <div class="cover-ornamen1"><img src="assets/coverOrnamen1.png" alt="" width="50%"></div>
+    <div class="cover-ornamen2"><img src="assets/coverOrnamen2.png" alt="" width="100%"></div>
+        <div class="cover">
+            <div class="text-white text-center">
+                <div class="coverBlur">
+                    <div class="container pb-4 pt-4">
+                        <p class="first-conjunction pb-3">THE WEDDING</p>
+                        <p class="lead">Hari</p>
+                        <p class="conjunction">AND</p>
+                        <p class="lead">Anis</p>
+                        <img src="assets/date.png" class="mx-auto d-block" alt="" width="250">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ayat Quran & Mempelai -->
+    <div id="couple" class="content">
+        <div class="ornamen1"><img src="assets/ornamen1.png" alt="" width="100%"></div>
+        <div class="ornamen2"><img src="assets/ornamen2.png" alt="" width="100%"></div>
+        <div class="contentBox">
+            <div class="topOrnamen"><img src="assets/topOrnamen.png" alt="" width="25%"></div>
+            <div class="contentborder">
+                <div class="container text-center pembuka pt-5 pb-3">
+                    <p class="salam">Assalamu'alaikum Warahmatullahi Wabarakaatuh</p>
+                    <p class="pengantar">Dengan memohon rahmat dan ridho Allah SWT kami bermaksud menyelenggarakan pernikahan putra putri kami:</p>
+                </div>
+                <div class="container text-center mempelai">
+                    <p class="nama-mempelai">Hari Pranata</p>
+                    <div class="text-orang-tua">
+                        <p class="orang-tua">Putra Bapak Heri Saktiyono & Ibu Sri Martini</p>
+                    </div>
+                    <p class="nama-mempelai">&</p>
+                    <p class="nama-mempelai">Khusnul Aniswati</p>
+                    <div class="text-orang-tua">
+                        <p class="orang-tua pb-5">Putri Alm. Bapak Kamid & Ibu Mubayanah</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bottomOrnamen"><img src="assets/bottomOrnamen.png" alt="" width="25%"></div>
+        </div>
+    </div>
+
+    <!-- Venue & Schedule -->
+    <div id="schedule" class="content">
+        <div class="ornamen1"><img src="assets/ornamen1.png" alt="" width="100%"></div>
+        <div class="ornamen2"><img src="assets/ornamen2.png" alt="" width="100%"></div>
+        <div class="contentBox">
+            <div class="topOrnamen"><img src="assets/topOrnamen.png" alt="" width="25%"></div>
+            <div class="contentborder">
+                <div class="container text-center">
+                    <div class="schedule mt-5">
+                        <h2>Akad Nikah</h2>
+                        <i class="fas fa-calendar-alt fa-2x"></i>
+                        <div class="text-space mt-3">
+                            <p>Sabtu, 03 April 2020</p>
+                            <p>08.00 s/d 09.00 WIB</p>
+                        </div>
+                        <i class="fas fa-map-marked fa-2x"></i>
+                        <div class="text-space mt-3">
+                            <div class="text-alamat">
+                                <p>Dsn. Dawungan, Ds. Ngadirejo, Kec. Salaman, Kab. Magelang</p>
+                            </div>
+                            <p>Hanya Dihadiri Keluarga</p>
+                        </div>
+                    </div>
+                    <hr class="hr-schedule mt-4">
+                    <div class="schedule mt-3">
+                        <h2>Resepsi Pernikahan</h2>
+                        <i class="fas fa-calendar-alt fa-2x"></i>
+                        <div class="text-space mt-3">
+                            <p>Sabtu, 03 April 2020</p>
+                            <p>10.00 s/d 12.00 WIB</p>
+                        </div>
+                        <i class="fas fa-map-marked fa-2x"></i>
+                        <div class="text-space mt-3">
+                            <p>Kediaman Mempelai Wanita</p>
+                            <div class="text-alamat">
+                                <p>Dsn. Dawungan, Ds. Ngadirejo, Kec. Salaman, Kab. Magelang</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Maps -->
+                    <div class="embed-responsive embed-responsive-16by9 mt-5">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1727.1546911173805!2d110.14365052825315!3d-7.588871919580494!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwMzUnMjIuMSJTIDExMMKwMDgnNDEuOCJF!5e0!3m2!1sen!2sid!4v1611925283425!5m2!1sen!2sid" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                    </div>
+                    <div><a href="https://goo.gl/maps/ayLePkMw7XRfn6sf7" target="_blank" class="btn btn-lokasi mt-3 mb-5"><i class="fas fa-map-marker-alt"></i> Lokasi</a></div>
+                </div>
+            </div>
+            <div class="bottomOrnamen"><img src="assets/bottomOrnamen.png" alt="" width="25%"></div>
+        </div>
+    </div>
+    
+    <!-- CountDown & Ucapan -->
+    <div id="countDown" class="content">
+        <div class="ornamen1"><img src="assets/ornamen1.png" alt="" width="100%"></div>
+        <div class="ornamen2"><img src="assets/ornamen2.png" alt="" width="100%"></div>
+        <div class="contentBox">
+            <div class="topOrnamen"><img src="assets/topOrnamen.png" alt="" width="25%"></div>
+            <div class="contentborder">
+                <!-- countdown -->
+                <div class="countContainer countdown">
+                    <h1 id="headline">Countdown to Special Day</h1>
+                    <div id="countdown">
+                        <ul>
+                        <li><span id="days"></span>Hari</li>
+                        <li><span id="hours"></span>Jam</li>
+                        <li><span id="minutes"></span>Menit</li>
+                        <li><span id="seconds"></span>Detik</li>
+                        </ul>
+                    </div>
+                    <div class="message">
+                        <div id="content">
+                        <span class="emoji">🥳</span>
+                        <span class="emoji">🎉</span>
+                        <span class="emoji">🎂</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ayat -->
+                <div class="container text-center ayat">
+                    <h2>بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</h2>
+                    <h3 class="pt-3">وَمِنْ اٰيٰتِهٖٓ اَنْ خَلَقَ لَكُمْ مِّنْ اَنْفُسِكُمْ اَزْوَاجًا لِّتَسْكُنُوْٓا اِلَيْهَا وَجَعَلَ بَيْنَكُمْ مَّوَدَّةً وَّرَحْمَةً ۗاِنَّ فِيْ ذٰلِكَ لَاٰيٰتٍ لِّقَوْمٍ يَّتَفَكَّرُوْنَ</h3>
+                    <p class="artiAyat">“Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang. Sungguh, pada yang demikian itu benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berpikir.”</p>
+                    <p>(Qs. Ar-Rum Ayat 21)</p>
+                </div>
+
+                <!-- ucapan -->
+                <div class="container">
+                    <h1 class="text-center ucapan">Ucapan & Doa</h1>
+                    <form class="mt-3" method="post" id="comment_form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="comment_name" name="comment_name" placeholder="Nama">
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" id="comment_content" name="comment_content" placeholder="Ucapan" rows="5"></textarea>
+                        </div>
+                        <input type="hidden" name="comment_id" id="comment_id" value="0" />
+                        <div class="text-center">
+                            <input type="submit" id="submit" name="submit" class="btn btn-ucapan" value="Kirim"/>
+                        </div>
+                    </form>
+                    <hr>
+                    <span id="comment_message"></span>
+                    <div class="scrolled">
+                        <div id="display_comment"></>
+                    </div>
+                </div>
+
+                <!-- prokes -->
+                <table class="tableProkes mt-3 mb-3">
+                    <tr class="text-center">
+                        <td class="icon">
+                            <i class="fas prokes-icon fa-head-side-mask fa-3x"></i>
+                            </br>
+                            <p class="ket">Tamu undangan wajib menggunakan masker</p>
+                        </td>
+                        <td class="icon">
+                            <i class="fas prokes-icon fa-people-arrows fa-3x"></i>
+                            </br>
+                            <p class="ket">Jaga jarak aman</p>
+                        </td>
+                        <td class="icon">
+                            <i class="fas prokes-icon fa-hands-wash fa-3x"></i>
+                            </br>
+                            <p class="ket">Cuci tangan menggunakan sabun / hand sanitizer</p>
+                        </td>
+                        <td class="icon">
+                            <i class="fas prokes-icon fa-temperature-low fa-3x"></i>
+                            </br>
+                            <p class="ket">Suhu tubuh normal (dibawah 37,5° C)</p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+                <div class="music-src">
+                    <p><i class="fas fa-music "></i> Theme Song by Alffy Rev - Senja & Pagi (ft Farhad)</p>
+                </div>
+            </div>
+            <div class="bottomOrnamen"><img src="assets/bottomOrnamen.png" alt="" width="25%"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="pt-3 pb-2 text-center">
+        <p class="footer">&copy; 2021 Hari Pranata. All rights reserved</p>
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="js/countdown.js"></script>
+    <script src="js/musicbackg.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+</body>
+</html>
+<script>
+    $(window).on('load', function() {
+        $('#welcomeModal').modal({backdrop: 'static', keyboard: false});
+    });
+
+    $(document).ready(function(){
+        // Mengirimkan Token Keamanan
+        // $.ajaxSetup({
+        //     headers : {
+        //         'Csrf-Token': $('meta[name="csrf-token"]').attr('content')
+        //     }
+        // });
+    
+        $('#comment_form').on('submit', function(event){
+            event.preventDefault();
+            var form_data = $(this).serialize();
+                $.ajax({
+                    url:"add_comment.php",
+                    method:"POST",
+                    data:form_data,
+                    dataType:"JSON",
+                    success:function(data){
+                        if(data.error != ''){
+                            $('#comment_form')[0].reset();
+                            $('#comment_message').html(data.error);
+                            $('#comment_id').val('0');
+                            load_comment();
+                        }
+                    }
+                })
+        });
+
+        load_comment();
+
+        function load_comment(){
+            $.ajax({
+                url:"get_comment.php",
+                method:"POST",
+                success:function(data){
+                    $('#display_comment').html(data);
+                }, error: function(data) {
+                    console.log(data.responseText)
+                }
+            })
+        }
+
+        $(document).on('click', '.reply', function(){
+            var comment_id = $(this).attr("id");
+            $('#comment_id').val(comment_id);
+            $('#comment_name').focus();
+        });
+    });
+</script>
